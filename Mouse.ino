@@ -8,8 +8,8 @@ HIDBoot < USB_HID_PROTOCOL_KEYBOARD | USB_HID_PROTOCOL_MOUSE > HidComposite(&Usb
 HIDBoot<USB_HID_PROTOCOL_MOUSE>    HidMouse(&Usb);
 
 int delta[2];
-int negMax = -127;
-int posMax = 127;
+int negMax = -1023;
+int posMax = 1023;
 // Mouse
 int lmb = 0;
 int rmb = 0;
@@ -102,11 +102,14 @@ void loop()
     int ohHiMarc = data.indexOf(':');
     Serial.println(data);
 
+    delta[0] = data.substring(0, ohHiMarc).toInt();
+    delta[1] = data.substring(ohHiMarc + 1).toInt();
+
     // DeltaX & DeltaY
-    int x_value = data.substring(0, ohHiMarc).toInt();
-    delta[0] = map(x_value, 0, 1920, 0, 820);
-    int y_value = data.substring(ohHiMarc + 1).toInt();
-    delta[1] = map(y_value, 0, 1080, 0, 480);
+    // int x_value = data.substring(0, ohHiMarc).toInt();
+    // delta[0] = map(x_value, 0, 1920, 0, 820);
+    // int y_value = data.substring(ohHiMarc + 1).toInt();
+    // delta[1] = map(y_value, 0, 1080, 0, 480);
     handleX(delta[0]);
     handleY(delta[1]);
     //AbsoluteMouse.moveTo(delta[0], delta[1]);
