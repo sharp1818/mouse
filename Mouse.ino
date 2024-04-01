@@ -60,7 +60,6 @@ MouseRptParser MousePrs;
 
 void setup()
 {
-  //AbsoluteMouse.begin();
   Mouse.begin();
   Serial.begin( 115200 );
   Usb.Init();
@@ -97,22 +96,13 @@ void loop()
   {
     // Read Data
     String data = Serial.readStringUntil('x');
-
     // Gets demarcation between deltaX and DeltaY
     int ohHiMarc = data.indexOf(':');
     Serial.println(data);
-
     delta[0] = data.substring(0, ohHiMarc).toInt();
     delta[1] = data.substring(ohHiMarc + 1).toInt();
-
-    // DeltaX & DeltaY
-    // int x_value = data.substring(0, ohHiMarc).toInt();
-    // delta[0] = map(x_value, 0, 1920, 0, 820);
-    // int y_value = data.substring(ohHiMarc + 1).toInt();
-    // delta[1] = map(y_value, 0, 1080, 0, 480);
     handleX(delta[0]);
     handleY(delta[1]);
-    //AbsoluteMouse.moveTo(delta[0], delta[1]);
   } else {
     Mouse.move(delta[0], delta[1]);
   }
