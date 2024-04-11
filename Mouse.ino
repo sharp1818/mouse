@@ -8,8 +8,11 @@ HIDBoot < USB_HID_PROTOCOL_KEYBOARD | USB_HID_PROTOCOL_MOUSE > HidComposite(&Usb
 HIDBoot<USB_HID_PROTOCOL_MOUSE>    HidMouse(&Usb);
 
 int delta[2];
-int negMax = -1023;
-int posMax = 1023;
+int negMax = -126;
+int posMax = 126;
+// Monitor
+int halfMonitorWidth = 960;
+int halfMonitorHeight = 540; 
 // Mouse
 int lmb = 0;
 int rmb = 0;
@@ -99,8 +102,8 @@ void loop()
     // Gets demarcation between deltaX and DeltaY
     int ohHiMarc = data.indexOf(':');
     Serial.println(data);
-    delta[0] = data.substring(0, ohHiMarc).toInt();
-    delta[1] = data.substring(ohHiMarc + 1).toInt();
+    delta[0] = data.substring(0, ohHiMarc).toInt() - halfMonitorWidth;
+    delta[1] = -data.substring(ohHiMarc + 1).toInt() + halfMonitorHeight;
     handleX(delta[0]);
     handleY(delta[1]);
   } else {
