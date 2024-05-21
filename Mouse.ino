@@ -106,9 +106,7 @@ void loop()
     delta[1] = -data.substring(ohHiMarc + 1).toInt() + halfMonitorHeight;
     handleX(delta[0]);
     handleY(delta[1]);
-  } else {
-    Mouse.move(delta[0], delta[1]);
-  }
+  } 
 }
 
 // Handle Moving of x 
